@@ -1,0 +1,26 @@
+{
+  "name": "hackhpi2024",
+  "author": {
+    "name": "Jonas Scholz",
+    "email": "ubvja@student.kit.edu"
+  },
+  "version": "0.1.1",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "start": "turbo run start",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "ui:add": "pnpm --filter ui ui:add"
+  },
+  "devDependencies": {
+    "@turbo/gen": "^1.12.5",
+    "eslint": "^8.57.0",
+    "eslint-config-custom": "workspace:*",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.12",
+    "turbo": "^1.12.5"
+  },
+  "packageManager": "pnpm@8.6.2"
+}

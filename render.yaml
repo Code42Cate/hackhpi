@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: hackhpi2024
+    runtime: node
+    buildCommand: pnpm install --filter web && pnpm run build --filter web
+    startCommand: pnpm run start --filter web
+databases:
+  - name: hackasaurusrex
+    region: frankfurt
+    plan: standard
+    databaseName: hackhpi2024
+    postgresMajorVersion: 15
