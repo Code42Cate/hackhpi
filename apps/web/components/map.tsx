@@ -58,8 +58,8 @@ export default function Map({
 
           var options = {
             type: "gltf",
-            obj: "/truck.glb",
-            scale: 4,
+            obj: "/tree.glb",
+            scale: 1,
             units: "meters",
             anchor: "bottom",
             rotation: { x: 90, y: 0, z: 0 },
