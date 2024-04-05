@@ -17,7 +17,7 @@ export default function CityModule({ name, Icon, description = null, likeCount, 
     return (
         <Card className="shadow-md hover:shadow-lg hover:bg-gray-100 cursor-pointer">
             <CardHeader>
-                <CardTitle className="text-lg">
+                <CardTitle className="text-md">
                     <div className="flex justify-between">
                         <div className="flex gap-2">
                             {Icon && <Icon className="h-6 w-6 relative top-[2px]" />}

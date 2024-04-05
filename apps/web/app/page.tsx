@@ -12,7 +12,7 @@ export default function Page() {
         <Map setSelectedSpot={setSelectedSpot} />
       </div>
       {selectedSpot && (
-        <div className="absolute right-0 h-screen w-96 rounded-l-lg bg-white p-4">
+        <div className="absolute right-0 h-screen w-96 rounded-l-lg bg-white p-4 overflow-y-auto">
           <WayDetails selectedSpot={selectedSpot} />
         </div>
       )}
