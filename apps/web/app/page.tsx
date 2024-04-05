@@ -1,5 +1,4 @@
 import Map from "@/components/map";
-import Link from "next/link";
 
 export default function Page() {
   return (
