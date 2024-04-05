@@ -5,75 +5,17 @@ import {
   AccordionContent,
 } from "ui/components/ui/accordion";
 
-import {
-  Heart,
-  Flower,
-  TreeDeciduous,
-  Trees,
-  Droplets,
-  Bike,
-  FerrisWheel,
-  GlassWater,
-  Droplet,
-} from "lucide-react";
+import { Heart } from "lucide-react";
 import CityModule from "@/components/CityModule";
 import CityModules from "@/components/CityModules";
 import { useState } from "react";
 import { Spot } from "./map";
 
+import { cityModuleCategories, cityModules } from "@/data/cityModules";
+
 export default function WayDetails({ selectedSpot }: { selectedSpot: Spot }) {
   let [treeState, setTreeState] = useState(false);
 
-  let cityModuleCategories = {
-    greenery: {
-      name: "Greenery",
-      modules: ["tree", "flower-bed"],
-      icon: Trees,
-    },
-    "primary-care": {
-      name: "Primary care",
-      modules: ["drink-fountain", "public-toilet"],
-      icon: Droplets,
-    },
-    mobility: {
-      name: "Mobility",
-      modules: [],
-      icon: Bike,
-    },
-    community: {
-      name: "Community",
-      modules: [],
-      icon: FerrisWheel,
-    },
-  };
-  let cityModules = {
-    tree: {
-      name: "Trees",
-      likeCount: selectedSpot.likes.TreesLikeCount,
-      isLiked: treeState,
-      Icon: TreeDeciduous,
-      description:
-        "Plant a tree that spends shadow and improves the air quality.",
-    },
-    "flower-bed": {
-      name: "Flower Bed",
-      likeCount: selectedSpot.likes.FlowersLikeCount,
-      Icon: Flower,
-      description: "Plant a flower bed and give insects a home.",
-    },
-    "drink-fountain": {
-      name: "Drink Fountain",
-      likeCount: selectedSpot.likes.DrinkFountainLikeCount,
-      Icon: GlassWater,
-      description: "A drinking fountain to quench the thirst.",
-    },
-    "public-toilet": {
-      name: "Public Toilet",
-      likeCount: selectedSpot.likes.PublicToiletLikeCount,
-      Icon: Droplet,
-      description: "A public toilet for the community.",
-    },
-  };
   let noMostVoted = 3;
   let mostVoted = Object.keys(cityModules)
     .sort((a, b) => cityModules[b].likeCount - cityModules[a].likeCount)
