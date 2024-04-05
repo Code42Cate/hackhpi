@@ -141,10 +141,21 @@ export default function Map({
 }
 
 function addTree(lng: number, lat: number) {
-  var options = {
+  const scale = {
+    "/landmann_grill.glb": 0.0025,
+    "/maple_tree.glb": 0.1,
+    "/bicycle_low-poly_minimalistic.glb": 1,
+    "/sports_rackets_bats_and_balls.glb": 0.1,
+    "/dusty_old_bookshelf_free": 10,
+    "/emrysquick_project1.glb": 10,
+  };
+
+  const obj = "/dusty_old_bookshelf_free.glb";
+
+  const options = {
     type: "gltf",
-    obj: "/maple_tree.glb",
-    scale: 0.1,
+    obj,
+    scale: scale[obj],
     units: "meters",
     adjustment: { x: 0, y: 0.5, z: 0 },
     anchor: "bottom",
