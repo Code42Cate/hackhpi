@@ -31,12 +31,6 @@ export default function Map({
       pitchWithRotate: true,
     });
 
-    const el = document.createElement("div");
-    el.className = "w-8 h-14 border border-red-500";
-    const Draw = new MapboxDraw();
-
-    map.current.addControl(Draw, "top-left");
-
     map.current.on("load", () => {
       map.current.addSource("parkingspots", {
         type: "geojson",
