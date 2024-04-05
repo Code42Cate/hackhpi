@@ -1,17 +1,23 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { fetchAirQuality } from "../lib/actions";
 import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
-import MapboxDraw from "@mapbox/mapbox-gl-draw"; // eslint-disable-line import/no-webpack-loader-syntax
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiY29kZTQyY2F0ZSIsImEiOiJjbHU5MG15NzEwNGJpMmpta2gzNWMxazFqIn0.DmdGNtsf_SCeRxqEDlt0UQ";
 
+export type Spot = {
+  lng: number;
+  lat: number;
+  aqi: number;
+};
+
 export default function Map({
   setSelectedSpot,
 }: {
-  setSelectedSpot: (spot: string) => void;
+  setSelectedSpot: (spot: Spot) => void;
 }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
@@ -85,8 +91,12 @@ export default function Map({
         map.current.getCanvas().style.cursor = "";
       });
 
-      map.current.on("click", "parkingspots", (e) => {
-        setSelectedSpot(e.lngLat.toString());
+      map.current.on("click", "parkingspots", async (e) => {
+        setSelectedSpot({
+          lng: e.lngLat.lng,
+          lat: e.lngLat.lat,
+          aqi: await fetchAirQuality(e.lngLat.lat, e.lngLat.lng),
+        });
       });
     });
   });
