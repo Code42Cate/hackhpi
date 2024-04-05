@@ -5,6 +5,7 @@ import { fetchAirQuality } from "../lib/actions";
 import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import data from "../minified.json";
+import { Threebox } from "threebox-plugin";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiY29kZTQyY2F0ZSIsImEiOiJjbHU5MG15NzEwNGJpMmpta2gzNWMxazFqIn0.DmdGNtsf_SCeRxqEDlt0UQ";
@@ -17,6 +18,7 @@ export type Spot = {
   aqi: number;
 };
 
+const origin: mapboxgl.LngLatLike = [13.4394958, 52.518519];
 export default function Map({
   setSelectedSpot,
 }: {
@@ -30,7 +32,7 @@ export default function Map({
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/standard",
-      center: [13.4394958, 52.518519],
+      center: origin,
       zoom: 18,
       antialias: true,
       dragRotate: true,
@@ -41,6 +43,40 @@ export default function Map({
     });
 
     map.current.on("load", () => {
+      let tb;
+      map.current.addLayer({
+        id: "custom_layer",
+        type: "custom",
+        renderingMode: "3d",
+        onAdd: function (map, mbxContext) {
+          // @ts-ignore
+          tb = new Threebox(map, mbxContext, {
+            defaultLights: true,
+          });
+          // @ts-ignore
+          window.tb = tb;
+
+          var options = {
+            type: "gltf",
+            obj: "/truck.glb",
+            scale: 4,
+            units: "meters",
+            anchor: "bottom",
+            rotation: { x: 90, y: 0, z: 0 },
+          };
+
+          tb.loadObj(options, function (model: any) {
+            const truck = model.setCoords(origin);
+            truck.addEventListener("ObjectChanged", console.log, false);
+            tb.add(truck);
+          });
+        },
+
+        render: function () {
+          tb.update();
+        },
+      });
+
       map.current.addSource("parkingspots", {
         type: "geojson",
         generateId: true,

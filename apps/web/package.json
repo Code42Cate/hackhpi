@@ -25,6 +25,7 @@
     "react-hook-form": "^7.51.1",
     "recharts": "^2.12.3",
     "sonner": "^1.4.41",
+    "threebox-plugin": "^2.2.7",
     "ui": "workspace:*",
     "zod": "^3.22.4"
   },
