@@ -12,6 +12,7 @@ mapboxgl.accessToken =
 export type Spot = {
   lng: number;
   lat: number;
+  id: string;
   streetname: string;
   aqi: number;
 };
@@ -42,6 +43,7 @@ export default function Map({
     map.current.on("load", () => {
       map.current.addSource("parkingspots", {
         type: "geojson",
+        generateId: true,
         data: {
           type: "FeatureCollection",
           features: (data as any).features,
@@ -50,12 +52,17 @@ export default function Map({
 
       // Add a new layer to visualize the polygon.
       map.current.addLayer({
-        id: "parkingspots",
+        id: "areas",
         type: "fill",
         source: "parkingspots", // reference the data source
         layout: {},
         paint: {
-          "fill-color": "#0080ff", // blue color fill
+          "fill-color": [
+            "case",
+            ["boolean", ["feature-state", "clicked"], true],
+            "#64bdbb", // if selected true, paint in blue
+            "#888888", // else paint in gray
+          ],
           "fill-opacity": 0.3,
         },
       });
@@ -72,23 +79,50 @@ export default function Map({
         },
       });
 
-      map.current.on("mouseenter", "parkingspots", () => {
+      map.current.on("mouseenter", "areas", () => {
         map.current.getCanvas().style.cursor = "pointer";
       });
 
       // Change the cursor back to a pointer
       // when it leaves the states layer.
-      map.current.on("mouseleave", "parkingspots", () => {
+      map.current.on("mouseleave", "areas", () => {
         map.current.getCanvas().style.cursor = "";
       });
 
-      map.current.on("click", "parkingspots", async (e) => {
+      let currentPolygonId = null;
+      map.current.on("click", "areas", async (e) => {
+        const id = e.features[0].id;
         setSelectedSpot({
           lng: e.lngLat.lng,
           lat: e.lngLat.lat,
           streetname: e.features[0].properties.strassenname,
+          id,
           aqi: await fetchAirQuality(e.lngLat.lat, e.lngLat.lng),
         });
+
+        if (currentPolygonId) {
+          map.current.setFeatureState(
+            {
+              source: "parkingspots",
+              id: currentPolygonId,
+            },
+            {
+              clicked: true,
+            },
+          );
+        }
+
+        map.current.setFeatureState(
+          {
+            source: "parkingspots",
+            id,
+          },
+          {
+            clicked: false,
+          },
+        );
+
+        currentPolygonId = id;
       });
     });
   });
