@@ -11,9 +11,11 @@ export default function Page() {
       <div className="w-full shadow-sm">
         <Map setSelectedSpot={setSelectedSpot} />
       </div>
-      <div className="absolute right-0 h-screen w-96 rounded-l-lg bg-white p-4">
-        {selectedSpot && <WayDetails selectedSpot={selectedSpot} />}
-      </div>
+      {selectedSpot && (
+        <div className="absolute right-0 h-screen w-96 rounded-l-lg bg-white p-4">
+          <WayDetails selectedSpot={selectedSpot} />
+        </div>
+      )}
     </div>
   );
 }
