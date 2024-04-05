@@ -3,6 +3,8 @@ import Map, { Spot } from "@/components/map";
 import WayDetails from "@/components/WayDetails";
 import { useState } from "react";
 
+import { cityModuleCategories, cityModules } from '@/data/cityModules'
+
 export default function Page() {
   const [selectedSpot, setSelectedSpot] = useState<Spot | null>(null);
 
