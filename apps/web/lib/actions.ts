@@ -9,7 +9,7 @@ type Response = {
 };
 
 export async function fetchAirQuality(lat: number, lon: number) {
-  const token = "";
+  const token = process.env.OPENWEATHERMAP_API_KEY;
   const url = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${token}`;
 
   const response = await fetch(url);

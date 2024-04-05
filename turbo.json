@@ -27,5 +27,5 @@
       "dependsOn": ["^build", "^db:generate"]
     }
   },
-  "globalEnv": ["OPENAI_API_KEY"]
+  "globalEnv": ["DATABASE_URL", "OPENWEATHERMAP_API_KEY"]
 }

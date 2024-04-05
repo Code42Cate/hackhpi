@@ -13,7 +13,7 @@ export type Spot = {
   lng: number;
   lat: number;
   streetname: string;
-  //aqi: number;
+  aqi: number;
 };
 
 export default function Map({
@@ -87,7 +87,7 @@ export default function Map({
           lng: e.lngLat.lng,
           lat: e.lngLat.lat,
           streetname: e.features[0].properties.strassenname,
-          // aqi: await fetchAirQuality(e.lngLat.lat, e.lngLat.lng),
+          aqi: await fetchAirQuality(e.lngLat.lat, e.lngLat.lng),
         });
       });
     });
