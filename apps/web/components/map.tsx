@@ -104,8 +104,6 @@ export default function Map({
         map.current.getCanvas().style.cursor = "pointer";
       });
 
-      // Change the cursor back to a pointer
-      // when it leaves the states layer.
       map.current.on("mouseleave", "areas", () => {
         map.current.getCanvas().style.cursor = "";
       });
@@ -123,47 +121,41 @@ export default function Map({
 
         if (currentPolygonId) {
           map.current.setFeatureState(
-            {
-              source: "parkingspots",
-              id: currentPolygonId,
-            },
-            {
-              clicked: true,
-            },
+            { source: "parkingspots", id: currentPolygonId },
+            { clicked: true },
           );
         }
 
         map.current.setFeatureState(
-          {
-            source: "parkingspots",
-            id,
-          },
-          {
-            clicked: false,
-          },
+          { source: "parkingspots", id },
+          { clicked: false },
         );
-
         currentPolygonId = id;
 
-        var options = {
-          type: "gltf",
-          obj: "/maple_tree.glb",
-          scale: 0.1,
-          units: "meters",
-          adjustment: { x: 0, y: 0.5, z: 0 },
-          anchor: "bottom",
-          rotation: { x: 90, y: 0, z: 0 },
-        };
-
-        // @ts-ignore
-        window.tb.loadObj(options, function (model: any) {
-          const truck = model.setCoords([e.lngLat.lng, e.lngLat.lat]);
-          truck.addEventListener("ObjectChanged", console.log, false);
-          tb.add(truck);
-        });
+        addTree(e.lngLat.lng, e.lngLat.lat);
       });
     });
   });
 
   return <div ref={mapContainer} className="h-screen" />;
+}
+
+function addTree(lng: number, lat: number) {
+  var options = {
+    type: "gltf",
+    obj: "/maple_tree.glb",
+    scale: 0.1,
+    units: "meters",
+    adjustment: { x: 0, y: 0.5, z: 0 },
+    anchor: "bottom",
+    rotation: { x: 90, y: 0, z: 0 },
+  };
+
+  // @ts-ignore
+  window.tb.loadObj(options, function (model: any) {
+    const truck = model.setCoords([lng, lat]);
+    truck.addEventListener("ObjectChanged", console.log, false);
+    // @ts-ignore
+    window.tb.add(truck);
+  });
 }
