@@ -1,9 +1,10 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { fetchAirQuality } from "../lib/actions";
 import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
+import data from "../minified.json";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiY29kZTQyY2F0ZSIsImEiOiJjbHU5MG15NzEwNGJpMmpta2gzNWMxazFqIn0.DmdGNtsf_SCeRxqEDlt0UQ";
@@ -11,7 +12,8 @@ mapboxgl.accessToken =
 export type Spot = {
   lng: number;
   lat: number;
-  aqi: number;
+  streetname: string;
+  //aqi: number;
 };
 
 export default function Map({
@@ -41,19 +43,8 @@ export default function Map({
       map.current.addSource("parkingspots", {
         type: "geojson",
         data: {
-          type: "Feature",
-          geometry: {
-            type: "Polygon",
-            coordinates: [
-              [
-                [13.4394958, 52.518519],
-                [13.4394149, 52.5185354],
-                [13.439405, 52.5185173],
-                [13.4394859, 52.5185009],
-                [13.4394958, 52.518519],
-              ],
-            ],
-          },
+          type: "FeatureCollection",
+          features: (data as any).features,
         },
       });
 
@@ -95,7 +86,8 @@ export default function Map({
         setSelectedSpot({
           lng: e.lngLat.lng,
           lat: e.lngLat.lat,
-          aqi: await fetchAirQuality(e.lngLat.lat, e.lngLat.lng),
+          streetname: e.features[0].properties.strassenname,
+          // aqi: await fetchAirQuality(e.lngLat.lat, e.lngLat.lng),
         });
       });
     });
