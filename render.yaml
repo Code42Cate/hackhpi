@@ -5,7 +5,7 @@ services:
     buildCommand: pnpm install --filter web && pnpm run build --filter web
     startCommand: pnpm run start --filter web
 databases:
-  - name: hackasaurusrex
+  - name: hackhpi2024
     region: frankfurt
     plan: standard
     databaseName: hackhpi2024
