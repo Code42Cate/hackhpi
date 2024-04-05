@@ -7,13 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Admin {
-  Id    Int    @id @default(autoincrement())
-  email String @unique
+model Polygon {
+  Id String @id // polygon_id P005_000002
 
-  firstName String
-  lastName  String
-  position  String
-
-  avatarUrl String
+  TreesLikeCount         Int
+  FlowersLikeCount       Int
+  DrinkFountainLikeCount Int
+  PublicToiletLikeCount  Int
 }
