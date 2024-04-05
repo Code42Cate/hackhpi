@@ -21,6 +21,8 @@ export default function WayDetails({ selectedSpot }: { selectedSpot: Spot }) {
     .sort((a, b) => cityModules[b].likeCount - cityModules[a].likeCount)
     .slice(0, noMostVoted);
 
+  console.log(selectedSpot.likes);
+
   return (
     <div>
       <h1 className="mb-6 text-3xl font-bold">{selectedSpot.streetname}</h1>
