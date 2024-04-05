@@ -9,8 +9,8 @@ mapboxgl.accessToken =
 export default function Map() {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng, setLng] = useState(8.40444);
-  const [lat, setLat] = useState(49.00937);
+  const [lng, setLng] = useState(13.449106180576361);
+  const [lat, setLat] = useState(52.51349867057073);
   const [zoom, setZoom] = useState(16);
 
   useEffect(() => {
@@ -23,21 +23,18 @@ export default function Map() {
       antialias: true,
       dragRotate: true,
       dragPan: true,
+      touchPitch: true,
+      pitchWithRotate: true,
     });
 
     const el = document.createElement("div");
-    el.className = "w-8 h-8 bg-red-500 rounded-full";
+    el.className = "w-8 h-14 border border-red-500";
 
     // set marker
     new mapboxgl.Marker(el)
-      .setLngLat([8.409056081007058, 49.00927741395377])
+      .setLngLat([13.449106180576361, 52.51349867057073])
       .addTo(map.current);
   });
 
-  return (
-    <div
-      ref={mapContainer}
-      className="h-[500px] overflow-hidden rounded-2xl border"
-    />
-  );
+  return <div ref={mapContainer} className="h-screen" />;
 }
