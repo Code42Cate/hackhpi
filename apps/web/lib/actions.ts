@@ -1,5 +1,5 @@
 "use server";
-
+import { Polygon, prisma } from "database";
 type Response = {
   list: {
     main: {
@@ -21,4 +21,11 @@ export async function fetchAirQuality(lat: number, lon: number) {
   const data = (await response.json()) as Response;
 
   return data.list[0].main.aqi;
+}
+
+export async function getSpotLikes(polygonId: string): Promise<Polygon> {
+  const polygon = await prisma.polygon.findUnique({
+    where: { Id: polygonId },
+  });
+  return polygon;
 }

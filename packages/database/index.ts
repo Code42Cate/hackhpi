@@ -1,20 +1,4 @@
-export type {
-  Admin,
-  Mentor,
-  BusinessModel,
-  Category,
-  Checkout,
-  FundingRound,
-  Metric,
-  FellowStatus,
-  Founder,
-  FundingStatus,
-  UniversityDegree,
-  Gender,
-  Partner,
-  Request,
-  Startup,
-} from "@prisma/client";
+export type { Polygon } from "@prisma/client";
 
 import { PrismaClient } from "@prisma/client";
 

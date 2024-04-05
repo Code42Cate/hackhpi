@@ -1,11 +1,12 @@
 "use client";
 import React, { useRef, useEffect } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { fetchAirQuality } from "../lib/actions";
+import { fetchAirQuality, getSpotLikes } from "../lib/actions";
 import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import data from "../minified.json";
 import { Threebox } from "threebox-plugin";
+import { Polygon } from "database";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiY29kZTQyY2F0ZSIsImEiOiJjbHU5MG15NzEwNGJpMmpta2gzNWMxazFqIn0.DmdGNtsf_SCeRxqEDlt0UQ";
@@ -15,6 +16,7 @@ export type Spot = {
   lat: number;
   id: string;
   streetname: string;
+  likes: Polygon;
   aqi: number;
 };
 
@@ -110,13 +112,15 @@ export default function Map({
 
       let currentPolygonId = null;
       map.current.on("click", "areas", async (e) => {
-        const id = e.features[0].id;
+        const feature = e.features[0];
+        const id = feature.id;
         setSelectedSpot({
           lng: e.lngLat.lng,
           lat: e.lngLat.lat,
-          streetname: e.features[0].properties.strassenname,
+          streetname: feature.properties.strassenname,
           id,
           aqi: await fetchAirQuality(e.lngLat.lat, e.lngLat.lng),
+          likes: await getSpotLikes(feature.properties.polygon_id),
         });
 
         if (currentPolygonId) {
