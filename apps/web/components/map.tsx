@@ -55,21 +55,6 @@ export default function Map({
           });
           // @ts-ignore
           window.tb = tb;
-
-          var options = {
-            type: "gltf",
-            obj: "/tree.glb",
-            scale: 1,
-            units: "meters",
-            anchor: "bottom",
-            rotation: { x: 90, y: 0, z: 0 },
-          };
-
-          tb.loadObj(options, function (model: any) {
-            const truck = model.setCoords(origin);
-            truck.addEventListener("ObjectChanged", console.log, false);
-            tb.add(truck);
-          });
         },
 
         render: function () {
@@ -159,6 +144,23 @@ export default function Map({
         );
 
         currentPolygonId = id;
+
+        var options = {
+          type: "gltf",
+          obj: "/maple_tree.glb",
+          scale: 0.1,
+          units: "meters",
+          adjustment: { x: 0, y: 0.5, z: 0 },
+          anchor: "bottom",
+          rotation: { x: 90, y: 0, z: 0 },
+        };
+
+        // @ts-ignore
+        window.tb.loadObj(options, function (model: any) {
+          const truck = model.setCoords([e.lngLat.lng, e.lngLat.lat]);
+          truck.addEventListener("ObjectChanged", console.log, false);
+          tb.add(truck);
+        });
       });
     });
   });
