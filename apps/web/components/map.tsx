@@ -24,7 +24,7 @@ const features = (data as any).features.filter((x) =>
   x.properties.polygon_id.startsWith("P106_"),
 );
 
-export default function Map() {
+export default function Map({ polygons }: { polygons: Polygon[] }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const router = useRouter();
@@ -57,6 +57,10 @@ export default function Map() {
           });
           // @ts-ignore
           window.tb = tb;
+
+          polygons.forEach((polygon) => {
+            addObject(polygon);
+          });
         },
 
         render: function () {
@@ -129,7 +133,7 @@ export default function Map() {
         );
         currentPolygonId = id;
 
-        addTree(e.lngLat.lng, e.lngLat.lat);
+        //addTree(e.lngLat.lng, e.lngLat.lat);
       });
     });
   });
@@ -137,7 +141,7 @@ export default function Map() {
   return <div ref={mapContainer} className="h-screen" />;
 }
 
-function addTree(lng: number, lat: number) {
+function addObject(polygon: Polygon) {
   const scale = {
     "/landmann_grill.glb": 0.0025,
     "/maple_tree.glb": 0.1,
@@ -147,7 +151,35 @@ function addTree(lng: number, lat: number) {
     "/emrysquick_project1.glb": 10,
   };
 
-  const obj = "/bike-station1.glb";
+  // @ts-ignore
+  const feature = data.features.find(
+    (x) => x.properties.polygon_id === polygon.Id,
+  );
+
+  const lng = feature.geometry.coordinates[0][0][0];
+  const lat = feature.geometry.coordinates[0][0][1];
+
+  const counts = {
+    PublicToiletLikeCount: polygon.PublicToiletLikeCount,
+    DrinkFountainLikeCount: polygon.DrinkFountainLikeCount,
+    TreesLikeCount: polygon.TreesLikeCount,
+    FlowersLikeCount: polygon.FlowersLikeCount,
+  };
+
+  // find key with highest value
+  const max = Object.keys(counts).reduce((a, b) =>
+    counts[a] > counts[b] ? a : b,
+  );
+
+  // count key to obj mapping
+  const objMap = {
+    PublicToiletLikeCount: "/dusty_old_bookshelf_free.glb",
+    DrinkFountainLikeCount: "/bike-station1.glb",
+    TreesLikeCount: "/maple_tree.glb",
+    FlowersLikeCount: "/landmann_grill.glb",
+  };
+
+  const obj = objMap[max];
 
   const options = {
     type: "gltf",
