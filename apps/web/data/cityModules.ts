@@ -19,7 +19,7 @@ export const cityModuleCategories = {
   },
   "primary-care": {
     name: "Primary care",
-    modules: ["drink-fountain", "public-toilet"],
+    modules: ["bbq", "bikes"],
     icon: Droplets,
   },
   mobility: {
@@ -59,18 +59,18 @@ export const cityModules: Record<
     Icon: Flower,
     description: "Plant a flower bed and give insects a home.",
   },
-  "drink-fountain": {
-    name: "Drink Fountain",
+  bbq: {
+    name: "BBQ",
     likeCount: 12,
     Icon: GlassWater,
-    likeCountKey: "DrinkFountainLikeCount",
+    likeCountKey: "BBQLikeCount",
     description: "A drinking fountain to quench the thirst.",
   },
-  "public-toilet": {
-    name: "Public Toilet",
+  bikes: {
+    name: "Bikes",
     likeCount: 2,
     Icon: Droplet,
-    likeCountKey: "PublicToiletLikeCount",
+    likeCountKey: "BikesLikeCount",
     description: "A public toilet for the community.",
   },
 };
