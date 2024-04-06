@@ -24,7 +24,7 @@ const features = (data as any).features.filter((x) =>
   x.properties.polygon_id.startsWith("P106_"),
 );
 
-export default function Map() {
+export default function Map({ onLoad }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const router = useRouter();
@@ -57,6 +57,7 @@ export default function Map() {
           });
           // @ts-ignore
           window.tb = tb;
+          onLoad();
         },
 
         render: function () {

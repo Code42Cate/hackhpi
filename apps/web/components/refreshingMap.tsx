@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import data from "../minified.json";
 
 export default function RefreshingMap({ polygons }: { polygons: Polygon[] }) {
+  /*
   useEffect(() => {
     const interval = setInterval(() => {
       console.log("refresh 3d models");
@@ -20,8 +21,17 @@ export default function RefreshingMap({ polygons }: { polygons: Polygon[] }) {
 
     return () => clearInterval(interval);
   }, [polygons]);
+*/
 
-  return <Map />;
+  return (
+    <Map
+      onLoad={() => {
+        polygons.forEach((polygon) => {
+          drawCityModules(polygon);
+        });
+      }}
+    />
+  );
 }
 
 function drawCityModules(polygon: Polygon) {

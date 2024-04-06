@@ -64,10 +64,7 @@ export default function WayDetails({ selectedSpot }: { selectedSpot: Spot }) {
       <Accordion type="multiple" className="mt-6 w-full">
         {Object.values(cityModuleCategories).map((category) => (
           <AccordionItem value={category.name} key={category.name}>
-            <AccordionTrigger>
-              <category.icon className="h-5 w-5" />
-              {category.name}
-            </AccordionTrigger>
+            <AccordionTrigger>{category.name}</AccordionTrigger>
 
             <AccordionContent>
               <CityModules>
