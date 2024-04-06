@@ -18,9 +18,7 @@ import { likeSpot } from "@/lib/actions";
 
 export default function WayDetails({ selectedSpot }: { selectedSpot: Spot }) {
   let noMostVoted = 3;
-  let mostVoted = Object.keys(cityModules)
-    .sort((a, b) => cityModules[b].likeCount - cityModules[a].likeCount)
-    .slice(0, noMostVoted);
+  let mostVoted = Object.keys(cityModules);
   const router = useRouter();
 
   return (
@@ -45,6 +43,12 @@ export default function WayDetails({ selectedSpot }: { selectedSpot: Spot }) {
             {/* <CityModules> */}
             {mostVoted
               .map((m) => cityModules[m])
+              .sort(
+                (a, b) =>
+                  selectedSpot.likes[b.likeCountKey] -
+                  selectedSpot.likes[a.likeCountKey],
+              )
+              .slice(0, noMostVoted)
               .map((cityModule) => (
                 <CityModule
                   className="w-full cursor-pointer"
