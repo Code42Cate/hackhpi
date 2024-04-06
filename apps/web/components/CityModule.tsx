@@ -6,27 +6,20 @@ import {
 } from "ui/components/ui/card";
 
 import { Heart } from "lucide-react";
-import { likeSpot } from "@/lib/actions";
-import { useRouter } from "next/navigation";
 
 export default function CityModule({
   name,
-  likeCountKey,
   Icon,
   description = null,
-  polygonId,
   likeCount,
   isLiked = false,
+  className = "",
+  ...rest
 }) {
-  const router = useRouter();
-
   return (
     <Card
-      className="cursor-pointer shadow-md hover:bg-gray-100 hover:shadow-lg"
-      onClick={async () => {
-        await likeSpot(polygonId, likeCountKey);
-        router.refresh();
-      }}
+      {...rest}
+      className={"shadow-md hover:bg-gray-100 hover:shadow-lg " + className}
     >
       <CardHeader>
         <CardTitle className="text-base">
@@ -35,7 +28,7 @@ export default function CityModule({
               {Icon && <Icon className="relative h-6 w-6" />}
               {name}
             </div>
-            <div className="flex gap-2">
+            <div className="ml-4 flex gap-1">
               <Heart
                 fill={isLiked ? "red" : "none"}
                 className="top-[-5px] h-6 w-6"

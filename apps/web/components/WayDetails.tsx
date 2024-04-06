@@ -14,6 +14,8 @@ import { cityModuleCategories, cityModules } from "@/data/cityModules";
 import { XIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+import { likeSpot } from "@/lib/actions";
+
 export default function WayDetails({ selectedSpot }: { selectedSpot: Spot }) {
   let noMostVoted = 3;
   let mostVoted = Object.keys(cityModules)
@@ -39,11 +41,13 @@ export default function WayDetails({ selectedSpot }: { selectedSpot: Spot }) {
       <div>
         <h2 className="text-2xl">Most Popular</h2>
         <div className="mb-2 mt-6">
-          <CityModules>
+          <div className="flex flex-wrap gap-2">
+            {/* <CityModules> */}
             {mostVoted
               .map((m) => cityModules[m])
               .map((cityModule) => (
                 <CityModule
+                  className="shrink-0"
                   key={`${cityModule.name}--most-voted`}
                   polygonId={selectedSpot.likes.Id}
                   likeCountKey={cityModule.likeCountKey}
@@ -52,15 +56,16 @@ export default function WayDetails({ selectedSpot }: { selectedSpot: Spot }) {
                   Icon={cityModule.Icon}
                 />
               ))}
-          </CityModules>
+          </div>
+          {/* </CityModules> */}
         </div>
       </div>
-      <h2 className="text-2xl">Your Votes</h2>
-      <Accordion type="multiple" className="mt-4 w-full">
+      <h2 className="mt-8 text-2xl">Vote here</h2>
+      <Accordion type="multiple" className="mt-6 w-full">
         {Object.values(cityModuleCategories).map((category) => (
           <AccordionItem value={category.name} key={category.name}>
             <AccordionTrigger>
-              <category.icon className="h-4 w-4" />
+              <category.icon className="h-5 w-5" />
               {category.name}
             </AccordionTrigger>
 
@@ -70,13 +75,19 @@ export default function WayDetails({ selectedSpot }: { selectedSpot: Spot }) {
                   .map((m) => cityModules[m])
                   .map((cityModule) => (
                     <CityModule
+                      className="cursor-pointer"
                       key={`${cityModule.name}--${category.name}`}
-                      polygonId={selectedSpot.likes.Id}
-                      likeCountKey={cityModule.likeCountKey}
                       name={cityModule.name}
                       description={cityModule.description}
                       likeCount={selectedSpot.likes[cityModule.likeCountKey]}
                       Icon={cityModule.Icon}
+                      onClick={async () => {
+                        await likeSpot(
+                          selectedSpot.likes.Id,
+                          cityModule.likeCountKey,
+                        );
+                        router.refresh();
+                      }}
                     />
                   ))}
               </CityModules>
