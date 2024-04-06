@@ -76,7 +76,8 @@ function drawCityModules(polygon: Polygon) {
 
   let points = [];
 
-  let n = 3;
+  let n = Math.ceil((distance * 10000) / 3);
+  console.log(distance * 10000, n);
 
   for (let i = 0; i < n; i++) {
     let t = (2 * i + 1) / (2 * n);
@@ -86,29 +87,27 @@ function drawCityModules(polygon: Polygon) {
     ];
   }
 
-  //   console.log(coords, average, endpoint1, endpoint2);
+  takeMostVoted(polygon, n).forEach((cm, i) => {
+    drawCityModule(cm, points[i][0], points[i][1], 90);
+  });
+}
 
-  //   let [lng, lat] = [
-  //     (endpoint1[0] + endpoint2[0]) / 2,
-  //     (endpoint1[1] + endpoint2[1]) / 2,
-  //   ];
+function takeMostVoted(polygon, n) {
+  const keys = [
+    "BBQLikeCount",
+    "BikesLikeCount",
+    "TreesLikeCount",
+    "FlowersLikeCount",
+    "BooksLikeCount",
+  ];
+  const stats = keys.map((k) => [k, polygon[k]]);
+  stats.sort(([, a], [, b]) => b - a);
 
-  const counts = {
-    BBQLikeCount: polygon.BBQLikeCount,
-    BikesLikeCount: polygon.BikesLikeCount,
-    TreesLikeCount: polygon.TreesLikeCount,
-    FlowersLikeCount: polygon.FlowersLikeCount,
-    BooksLikeCount: polygon.BooksLikeCount,
-  };
-
-  // find key with highest value
-  const max = Object.keys(counts).reduce((a, b) =>
-    counts[a] > counts[b] ? a : b,
-  );
-
-  for (let i = 0; i < n; i++) {
-    drawCityModule(max, points[i][0], points[i][1], 90);
+  let result = [];
+  for (let i = 0; i < n && i < stats.length; i++) {
+    if (stats[i][1] > 0) result.push(stats[i][0]);
   }
+  return result;
 }
 
 function drawCityModule(countKey, lng, lat, rot = 90) {
@@ -127,7 +126,7 @@ function drawCityModule(countKey, lng, lat, rot = 90) {
     "/maple_tree.glb": 0.1,
     "/bike-station1.glb": 1.5,
     "/dusty_old_bookshelf_free": 10,
-    "/flower_bed_under_lime_tree.glb": 0.1,
+    "/flower_bed_under_lime_tree.glb": 1,
   };
 
   const options = {
