@@ -75,8 +75,7 @@ function drawCityModules(polygon: Polygon) {
 
   let points = [];
 
-  let n = Math.ceil((distance * 10000) / 3);
-  console.log(distance * 10000, n);
+  let n = Math.ceil((distance * 10000) / 2);
 
   for (let i = 0; i < n; i++) {
     let t = (2 * i + 1) / (2 * n);
@@ -121,10 +120,10 @@ function drawCityModule(countKey, lng, lat, rot = 90) {
   const obj = objMap[countKey];
 
   const scale = {
-    "/bbq.glb": 0.1,
+    "/bbq.glb": 0.2,
     "/maple_tree.glb": 0.1,
-    "/bike-station1.glb": 1.5,
-    "/dusty_old_bookshelf_free": 10,
+    "/bike-station1.glb": 2,
+    "/Bookshelf.glb": 0.4,
     "/flower_bed.glb": 2,
   };
 
