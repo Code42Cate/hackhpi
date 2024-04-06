@@ -30,7 +30,7 @@ export default async function Page({
         <Map />
       </div>
       {selectedSpotPolygonId && (
-        <div className="absolute right-0 h-screen w-96 overflow-y-auto rounded-l-lg bg-white p-4">
+        <div className="absolute bottom-0 h-96 w-screen overflow-y-auto rounded-t-lg bg-white p-4 md:right-0 md:h-screen md:w-96 md:rounded-l-lg">
           <WayDetails selectedSpot={selectedSpot} />
         </div>
       )}
