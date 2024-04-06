@@ -113,18 +113,21 @@ function drawCityModules(polygon: Polygon) {
 
 function drawCityModule(countKey, lng, lat, rot = 90) {
   const objMap = {
-    BooksLikeCount: "/dusty_old_bookshelf_free.glb",
-    BBQLikeCount: "/bike-station1.glb",
+    BooksLikeCount: "/Bookshelf.glb",
+    BBQLikeCount: "/bbq.glb",
     TreesLikeCount: "/maple_tree.glb",
-    BikesLikeCount: "/bbq.glb",
+    BikesLikeCount: "/bike-station1.glb",
+    FlowersLikeCount: "flower_bed_under_lime_tree.glb",
   };
+
   const obj = objMap[countKey];
 
   const scale = {
-    "/bbq.glb": 0.0025,
+    "/bbq.glb": 0.1,
     "/maple_tree.glb": 0.1,
     "/bike-station1.glb": 1.5,
     "/dusty_old_bookshelf_free": 10,
+    "flower_bed_under_lime_tree.glb": 0.1,
   };
 
   const options = {
