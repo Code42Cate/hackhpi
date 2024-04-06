@@ -57,7 +57,8 @@ function angleBetweenVectors(
   // Ensure cosTheta is within [-1, 1] to avoid NaN due to rounding errors
   const safeCosTheta = cosTheta; // Calculate the angle in radians
   const angleRad = Math.acos(safeCosTheta);
-  return angleRad * (180 / Math.PI);
+  const negative = v1[0] * v2[1] - v1[1] * v2[0] < 0;
+  return angleRad * (180 / Math.PI) * (negative ? -1 : 1);
 }
 
 function drawCityModules(polygon: Polygon) {
@@ -100,10 +101,10 @@ function drawCityModules(polygon: Polygon) {
     Math.pow(direction[0], 2) + Math.pow(direction[1], 2),
   );
   let rot = angleBetweenVectors([1, 0], direction);
+  console.log(direction, rot);
   let points = [];
 
   let n = Math.ceil((distance * 10000) / 3);
-  console.log(distance * 10000, n);
 
   for (let i = 0; i < n; i++) {
     let t = (2 * i + 1) / (2 * n);
@@ -152,7 +153,7 @@ function drawCityModule(countKey, lng, lat, rot = 90) {
     "/maple_tree.glb": 0.1,
     "/bike-station1.glb": 1.5,
     "/dusty_old_bookshelf_free": 10,
-    "/flower_bed.glb": 1,
+    "/flower_bed.glb": 2,
   };
 
   const options = {
@@ -162,7 +163,7 @@ function drawCityModule(countKey, lng, lat, rot = 90) {
     units: "meters",
     adjustment: { x: 0, y: 0.5, z: 0 },
     anchor: "bottom",
-    rotation: { x: 90, y: -rot + 20, z: 0 },
+    rotation: { x: 90, y: rot, z: 0 },
   };
 
   // @ts-ignore
