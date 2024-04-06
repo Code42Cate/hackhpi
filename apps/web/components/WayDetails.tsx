@@ -40,7 +40,8 @@ export default function WayDetails({ selectedSpot }: { selectedSpot: Spot }) {
           </CityModules>
         </div>
       </div>
-      <Accordion type="single" collapsible className="mt-4 w-full">
+      <h2 className="text-2xl">Your Votes</h2>
+      <Accordion type="multiple" className="mt-4 w-full">
         {Object.values(cityModuleCategories).map((category) => (
           <AccordionItem value={category.name} key={category.name}>
             <AccordionTrigger>
@@ -50,21 +51,19 @@ export default function WayDetails({ selectedSpot }: { selectedSpot: Spot }) {
 
             <AccordionContent>
               <CityModules>
-                <div onClick={() => [] /* TODO */}>
-                  {category.modules
-                    .map((m) => cityModules[m])
-                    .map((cityModule) => (
-                      <CityModule
-                        key={`${cityModule.name}--${category.name}`}
-                        polygonId={selectedSpot.likes.Id}
-                        likeCountKey={cityModule.likeCountKey}
-                        name={cityModule.name}
-                        description={cityModule.description}
-                        likeCount={selectedSpot.likes[cityModule.likeCountKey]}
-                        Icon={cityModule.Icon}
-                      />
-                    ))}
-                </div>
+                {category.modules
+                  .map((m) => cityModules[m])
+                  .map((cityModule) => (
+                    <CityModule
+                      key={`${cityModule.name}--${category.name}`}
+                      polygonId={selectedSpot.likes.Id}
+                      likeCountKey={cityModule.likeCountKey}
+                      name={cityModule.name}
+                      description={cityModule.description}
+                      likeCount={selectedSpot.likes[cityModule.likeCountKey]}
+                      Icon={cityModule.Icon}
+                    />
+                  ))}
               </CityModules>
             </AccordionContent>
           </AccordionItem>
