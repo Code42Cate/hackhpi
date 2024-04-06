@@ -79,7 +79,7 @@ export default function Map() {
           "fill-color": [
             "case",
             ["boolean", ["feature-state", "clicked"], true],
-            "#64bdbb", // if selected true, paint in blue
+            "#00b335", // if selected true, paint in blue
             "#888888", // else paint in gray
           ],
           "fill-opacity": 0.3,
@@ -125,7 +125,7 @@ export default function Map() {
         );
         currentPolygonId = id;
 
-        //addTree(e.lngLat.lng, e.lngLat.lat);
+        addTree(e.lngLat.lng, e.lngLat.lat);
       });
     });
   });
@@ -137,7 +137,7 @@ function addTree(lng: number, lat: number) {
   const scale = {
     "/landmann_grill.glb": 0.0025,
     "/maple_tree.glb": 0.1,
-    "/bike-station1.glb": 1,
+    "/bike-station1.glb": 1.5,
     "/sports_rackets_bats_and_balls.glb": 0.1,
     "/dusty_old_bookshelf_free": 10,
     "/emrysquick_project1.glb": 10,
