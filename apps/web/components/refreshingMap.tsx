@@ -33,6 +33,33 @@ export default function RefreshingMap({ polygons }: { polygons: Polygon[] }) {
   );
 }
 
+//util:
+// angle in degrees :)
+function angleBetweenVectors(
+  v1: [number, number],
+  v2: [number, number],
+): number {
+  function dotProduct(v1: [number, number], v2: [number, number]): number {
+    return v1[0] * v2[0] + v1[1] * v2[1];
+  }
+  function vectorMagnitude(v: [number, number]): number {
+    return Math.sqrt(v[0] * v[0] + v[1] * v[1]);
+  }
+
+  const dot = dotProduct(v1, v2);
+  const mag1 = vectorMagnitude(v1);
+  const mag2 = vectorMagnitude(v2);
+  // Avoid division by zero
+  if (mag1 === 0 || mag2 === 0) {
+    throw new Error("Cannot calculate angle for zero-length vector.");
+  }
+  const cosTheta = dot / (mag1 * mag2);
+  // Ensure cosTheta is within [-1, 1] to avoid NaN due to rounding errors
+  const safeCosTheta = cosTheta; // Calculate the angle in radians
+  const angleRad = Math.acos(safeCosTheta);
+  return angleRad * (180 / Math.PI);
+}
+
 function drawCityModules(polygon: Polygon) {
   // @ts-ignore
   const feature = data.features.find(
@@ -72,7 +99,7 @@ function drawCityModules(polygon: Polygon) {
   let distance = Math.sqrt(
     Math.pow(direction[0], 2) + Math.pow(direction[1], 2),
   );
-
+  let rot = angleBetweenVectors([1, 0], direction);
   let points = [];
 
   let n = Math.ceil((distance * 10000) / 3);
@@ -87,7 +114,7 @@ function drawCityModules(polygon: Polygon) {
   }
 
   takeMostVoted(polygon, n).forEach((cm, i) => {
-    drawCityModule(cm, points[i][0], points[i][1], 90);
+    drawCityModule(cm, points[i][0], points[i][1], rot);
   });
 }
 
@@ -135,7 +162,7 @@ function drawCityModule(countKey, lng, lat, rot = 90) {
     units: "meters",
     adjustment: { x: 0, y: 0.5, z: 0 },
     anchor: "bottom",
-    rotation: { x: rot, y: 0, z: 0 },
+    rotation: { x: 90, y: -rot + 20, z: 0 },
   };
 
   // @ts-ignore
