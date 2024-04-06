@@ -15,15 +15,12 @@ import { XIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { likeSpot } from "@/lib/actions";
-import { useRouter } from "next/navigation";
 
 export default function WayDetails({ selectedSpot }: { selectedSpot: Spot }) {
   let noMostVoted = 3;
   let mostVoted = Object.keys(cityModules)
     .sort((a, b) => cityModules[b].likeCount - cityModules[a].likeCount)
     .slice(0, noMostVoted);
-  const router = useRouter();
-
   const router = useRouter();
 
   return (
