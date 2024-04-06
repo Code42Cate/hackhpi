@@ -19,7 +19,7 @@ export default function RefreshingMap({ polygons }: { polygons: Polygon[] }) {
     }, 2500);
 
     return () => clearInterval(interval);
-  });
+  }, [polygons]);
 
   return <Map />;
 }
