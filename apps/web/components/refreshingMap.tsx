@@ -100,7 +100,7 @@ function drawCityModules(polygon: Polygon) {
   let distance = Math.sqrt(
     Math.pow(direction[0], 2) + Math.pow(direction[1], 2),
   );
-  let rot = angleBetweenVectors([1, 0], direction);
+  let rot = angleBetweenVectors([1, 0], direction as any);
   console.log(direction, rot);
   let points = [];
 
