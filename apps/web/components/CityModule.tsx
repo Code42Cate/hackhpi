@@ -29,10 +29,10 @@ export default function CityModule({
       }}
     >
       <CardHeader>
-        <CardTitle className="text-md">
+        <CardTitle className="text-base">
           <div className="flex justify-between">
-            <div className="flex gap-2">
-              {Icon && <Icon className="relative top-[2px] h-6 w-6" />}
+            <div className="flex flex-row items-center gap-2">
+              {Icon && <Icon className="relative h-6 w-6" />}
               {name}
             </div>
             <div className="flex gap-2">
