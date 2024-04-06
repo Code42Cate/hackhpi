@@ -1,10 +1,8 @@
-import Map, { Spot } from "@/components/map";
+import { Spot } from "@/components/map";
 import WayDetails from "@/components/WayDetails";
 import { getSpotLikes } from "@/lib/actions";
 import data from "../minified.json";
-import { prisma } from "database";
 import { fetchCityModuleVotes } from "@/lib/actions";
-import { useState } from "react";
 import RefreshingMap from "@/components/refreshingMap";
 
 export default async function Page({

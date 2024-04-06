@@ -6,8 +6,6 @@ import { useEffect } from "react";
 import data from "../minified.json";
 
 export default function RefreshingMap({ polygons }: { polygons: Polygon[] }) {
-  const lastState = null;
-
   useEffect(() => {
     const interval = setInterval(() => {
       console.log("refresh 3d models");

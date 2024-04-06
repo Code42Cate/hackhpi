@@ -128,8 +128,6 @@ export default function Map() {
           { clicked: false },
         );
         currentPolygonId = id;
-
-        //addTree(e.lngLat.lng, e.lngLat.lat);
       });
     });
   });
