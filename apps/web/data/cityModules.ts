@@ -9,6 +9,9 @@ import {
   GlassWater,
   Droplet,
   LucideIcon,
+  BikeIcon,
+  Book,
+  Drumstick,
 } from "lucide-react";
 
 export const cityModuleCategories = {
@@ -57,21 +60,21 @@ export const cityModules: Record<
   bbq: {
     name: "BBQ",
     likeCount: 12,
-    Icon: GlassWater,
+    Icon: Drumstick,
     likeCountKey: "BBQLikeCount",
     description: "A drinking fountain to quench the thirst.",
   },
   bikes: {
     name: "Bikes",
     likeCount: 2,
-    Icon: Droplet,
+    Icon: BikeIcon,
     likeCountKey: "BikesLikeCount",
     description: "A public toilet for the community.",
   },
   books: {
     name: "Books",
     likeCount: 2,
-    Icon: Droplet,
+    Icon: Book,
     likeCountKey: "BooksLikeCount",
     description: "A public toilet for the community.",
   },
