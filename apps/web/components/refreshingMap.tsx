@@ -117,7 +117,7 @@ function drawCityModule(countKey, lng, lat, rot = 90) {
     BBQLikeCount: "/bbq.glb",
     TreesLikeCount: "/maple_tree.glb",
     BikesLikeCount: "/bike-station1.glb",
-    FlowersLikeCount: "flower_bed_under_lime_tree.glb",
+    FlowersLikeCount: "/flower_bed_under_lime_tree.glb",
   };
 
   const obj = objMap[countKey];
@@ -127,7 +127,7 @@ function drawCityModule(countKey, lng, lat, rot = 90) {
     "/maple_tree.glb": 0.1,
     "/bike-station1.glb": 1.5,
     "/dusty_old_bookshelf_free": 10,
-    "flower_bed_under_lime_tree.glb": 0.1,
+    "/flower_bed_under_lime_tree.glb": 0.1,
   };
 
   const options = {
