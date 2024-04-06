@@ -4,6 +4,7 @@ import { Polygon } from "database";
 import Map from "./map";
 import { useEffect } from "react";
 import data from "../minified.json";
+import { edgeServerAppPaths } from "next/dist/build/webpack/plugins/pages-manifest-plugin";
 
 export default function RefreshingMap({ polygons }: { polygons: Polygon[] }) {
   /*
@@ -17,7 +18,7 @@ export default function RefreshingMap({ polygons }: { polygons: Polygon[] }) {
       polygons.forEach((polygon) => {
         drawCityModules(polygon);
       });
-    }, 2500);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [polygons]);
@@ -39,9 +40,59 @@ function drawCityModules(polygon: Polygon) {
   const feature = data.features.find(
     (x) => x.properties.polygon_id === polygon.Id,
   );
+  const coords = feature.geometry.coordinates[0];
+  const average = coords
+    .reduce(([ax, ay], [x, y]) => [ax + x, ay + y], [0, 0])
+    .map((c) => c / coords.length);
 
-  const lng = feature.geometry.coordinates[0][0][0];
-  const lat = feature.geometry.coordinates[0][0][1];
+  const findMaxEdgeFrom = (coords, start) => {
+    const edgeVector = [];
+    const edgeDistance = [];
+    for (let i = 0; i < coords.length - 1; i++) {
+      edgeVector[i] = [];
+      let coord1 = coords[i];
+      let coord2 = coords[i < coords.length - 1 ? i + 1 : 0];
+
+      edgeVector[i][0] = (coord1[0] + coord2[0]) / 2 - start[0];
+      edgeVector[i][1] = (coord1[1] + coord2[1]) / 2 - start[1];
+
+      edgeDistance[i] = Math.sqrt(
+        Math.pow(edgeVector[i][0], 2) + Math.pow(edgeVector[i][1], 2),
+      );
+    }
+    let maxDistance = Math.max(...edgeDistance);
+    let maxEdgeIndex = edgeDistance.indexOf(maxDistance);
+
+    let [x, y] = edgeVector[maxEdgeIndex];
+    return [x + start[0], y + start[1]];
+  };
+
+  let endpoint1 = findMaxEdgeFrom(coords, average);
+  let endpoint2 = findMaxEdgeFrom(coords, endpoint1);
+
+  let direction = [endpoint2[0] - endpoint1[0], endpoint2[1] - endpoint1[1]];
+  let distance = Math.sqrt(
+    Math.pow(direction[0], 2) + Math.pow(direction[1], 2),
+  );
+
+  let points = [];
+
+  let n = 3;
+
+  for (let i = 0; i < n; i++) {
+    let t = (2 * i + 1) / (2 * n);
+    points[i] = [
+      endpoint1[0] + t * direction[0],
+      endpoint1[1] + t * direction[1],
+    ];
+  }
+
+  //   console.log(coords, average, endpoint1, endpoint2);
+
+  //   let [lng, lat] = [
+  //     (endpoint1[0] + endpoint2[0]) / 2,
+  //     (endpoint1[1] + endpoint2[1]) / 2,
+  //   ];
 
   const counts = {
     PublicToiletLikeCount: polygon.PublicToiletLikeCount,
@@ -55,7 +106,9 @@ function drawCityModules(polygon: Polygon) {
     counts[a] > counts[b] ? a : b,
   );
 
-  drawCityModule(max, lng, lat, 90);
+  for (let i = 0; i < n; i++) {
+    drawCityModule(max, points[i][0], points[i][1], 90);
+  }
 }
 
 function drawCityModule(countKey, lng, lat, rot = 90) {
