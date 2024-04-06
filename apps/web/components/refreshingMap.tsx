@@ -4,9 +4,9 @@ import { Polygon } from "database";
 import Map from "./map";
 import data from "../minified.json";
 import { edgeServerAppPaths } from "next/dist/build/webpack/plugins/pages-manifest-plugin";
+import { useEffect } from "react";
 
 export default function RefreshingMap({ polygons }: { polygons: Polygon[] }) {
-  /*
   useEffect(() => {
     const interval = setInterval(() => {
       console.log("refresh 3d models");
@@ -21,7 +21,6 @@ export default function RefreshingMap({ polygons }: { polygons: Polygon[] }) {
 
     return () => clearInterval(interval);
   }, [polygons]);
-*/
 
   return (
     <Map
