@@ -52,10 +52,11 @@ export async function fetchCityModuleVotes() {
           startsWith: "P106_",
         },
         OR: [
-          { PublicToiletLikeCount: { not: 0 } },
-          { DrinkFountainLikeCount: { not: 0 } },
+          { BBQLikeCount: { not: 0 } },
+          { BooksLikeCount: { not: 0 } },
           { TreesLikeCount: { not: 0 } },
           { FlowersLikeCount: { not: 0 } },
+          { BikesLikeCount: { not: 0 } },
         ],
       },
     },

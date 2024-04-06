@@ -32,6 +32,7 @@ export default function CityModule({
               <Heart
                 fill={isLiked ? "red" : "none"}
                 className="top-[-5px] h-6 w-6"
+                color="red"
               />
               {likeCount + " "}
             </div>

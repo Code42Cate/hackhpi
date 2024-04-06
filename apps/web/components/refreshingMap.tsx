@@ -2,7 +2,6 @@
 
 import { Polygon } from "database";
 import Map from "./map";
-import { useEffect } from "react";
 import data from "../minified.json";
 
 export default function RefreshingMap({ polygons }: { polygons: Polygon[] }) {
@@ -44,10 +43,11 @@ function drawCityModules(polygon: Polygon) {
   const lat = feature.geometry.coordinates[0][0][1];
 
   const counts = {
-    PublicToiletLikeCount: polygon.PublicToiletLikeCount,
-    DrinkFountainLikeCount: polygon.DrinkFountainLikeCount,
+    BBQLikeCount: polygon.BBQLikeCount,
+    BikesLikeCount: polygon.BikesLikeCount,
     TreesLikeCount: polygon.TreesLikeCount,
     FlowersLikeCount: polygon.FlowersLikeCount,
+    BooksLikeCount: polygon.BooksLikeCount,
   };
 
   // find key with highest value
@@ -60,20 +60,18 @@ function drawCityModules(polygon: Polygon) {
 
 function drawCityModule(countKey, lng, lat, rot = 90) {
   const objMap = {
-    PublicToiletLikeCount: "/dusty_old_bookshelf_free.glb",
-    DrinkFountainLikeCount: "/bike-station1.glb",
+    BooksLikeCount: "/dusty_old_bookshelf_free.glb",
+    BBQLikeCount: "/bike-station1.glb",
     TreesLikeCount: "/maple_tree.glb",
-    FlowersLikeCount: "/landmann_grill.glb",
+    BikesLikeCount: "/bbq.glb",
   };
   const obj = objMap[countKey];
 
   const scale = {
-    "/landmann_grill.glb": 0.0025,
+    "/bbq.glb": 0.0025,
     "/maple_tree.glb": 0.1,
     "/bike-station1.glb": 1.5,
-    "/sports_rackets_bats_and_balls.glb": 0.1,
     "/dusty_old_bookshelf_free": 10,
-    "/emrysquick_project1.glb": 10,
   };
 
   const options = {

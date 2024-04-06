@@ -10,9 +10,10 @@ async function seed() {
   const polygons: Polygon[] = data.features.map((feature) => ({
     Id: feature.properties.polygon_id,
     TreesLikeCount: 0,
+    BBQLikeCount: 0,
     FlowersLikeCount: 0,
-    DrinkFountainLikeCount: 0,
-    PublicToiletLikeCount: 0,
+    BikesLikeCount: 0,
+    BooksLikeCount: 0,
   }));
 
   await database.polygon.createMany({

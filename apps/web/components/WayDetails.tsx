@@ -47,21 +47,34 @@ export default function WayDetails({ selectedSpot }: { selectedSpot: Spot }) {
               .map((m) => cityModules[m])
               .map((cityModule) => (
                 <CityModule
-                  className="shrink-0"
+                  className="w-full cursor-pointer"
                   key={`${cityModule.name}--most-voted`}
                   polygonId={selectedSpot.likes.Id}
                   likeCountKey={cityModule.likeCountKey}
                   name={cityModule.name}
                   likeCount={selectedSpot.likes[cityModule.likeCountKey]}
                   Icon={cityModule.Icon}
+                  onClick={async () => {
+                    await likeSpot(
+                      selectedSpot.likes.Id,
+                      cityModule.likeCountKey,
+                    );
+                    router.refresh();
+                  }}
                 />
               ))}
           </div>
           {/* </CityModules> */}
         </div>
       </div>
-      <h2 className="mt-8 text-2xl">Vote here</h2>
-      <Accordion type="multiple" className="mt-6 w-full">
+      <h2 className="mt-8 text-2xl">Vote for your Kiez</h2>
+      <Accordion
+        type="multiple"
+        className="mt-6 w-full"
+        defaultValue={Object.values(cityModuleCategories)
+          .filter((category) => category.modules.length > 0)
+          .map((category) => category.name)}
+      >
         {Object.values(cityModuleCategories).map((category) => (
           <AccordionItem value={category.name} key={category.name}>
             <AccordionTrigger>{category.name}</AccordionTrigger>

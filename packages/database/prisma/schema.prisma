@@ -10,8 +10,9 @@ datasource db {
 model Polygon {
   Id String @id // polygon_id P005_000002
 
-  TreesLikeCount         Int
-  FlowersLikeCount       Int
-  DrinkFountainLikeCount Int
-  PublicToiletLikeCount  Int
+  TreesLikeCount   Int
+  BBQLikeCount     Int
+  BikesLikeCount   Int
+  BooksLikeCount   Int
+  FlowersLikeCount Int
 }
