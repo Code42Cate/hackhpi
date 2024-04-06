@@ -17,19 +17,14 @@ export const cityModuleCategories = {
     modules: ["tree", "flower-bed"],
     icon: Trees,
   },
-  "primary-care": {
-    name: "Primary care",
-    modules: ["bbq", "bikes"],
-    icon: Droplets,
-  },
   mobility: {
     name: "Mobility",
-    modules: [],
+    modules: ["bikes"],
     icon: Bike,
   },
   community: {
     name: "Community",
-    modules: [],
+    modules: ["bbq", "books"],
     icon: FerrisWheel,
   },
 };
@@ -71,6 +66,13 @@ export const cityModules: Record<
     likeCount: 2,
     Icon: Droplet,
     likeCountKey: "BikesLikeCount",
+    description: "A public toilet for the community.",
+  },
+  books: {
+    name: "Books",
+    likeCount: 2,
+    Icon: Droplet,
+    likeCountKey: "BooksLikeCount",
     description: "A public toilet for the community.",
   },
 };
