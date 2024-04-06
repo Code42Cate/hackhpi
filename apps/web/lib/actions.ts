@@ -43,3 +43,21 @@ export async function likeSpot(
     },
   });
 }
+
+export async function fetchCityModuleVotes() {
+  return prisma.polygon.findMany({
+    where: {
+      AND: {
+        Id: {
+          startsWith: "P106_",
+        },
+        OR: [
+          { PublicToiletLikeCount: { not: 0 } },
+          { DrinkFountainLikeCount: { not: 0 } },
+          { TreesLikeCount: { not: 0 } },
+          { FlowersLikeCount: { not: 0 } },
+        ],
+      },
+    },
+  });
+}

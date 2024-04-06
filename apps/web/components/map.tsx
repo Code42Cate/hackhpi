@@ -24,7 +24,7 @@ const features = (data as any).features.filter((x) =>
   x.properties.polygon_id.startsWith("P106_"),
 );
 
-export default function Map({ polygons }: { polygons: Polygon[] }) {
+export default function Map() {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const router = useRouter();
@@ -57,10 +57,6 @@ export default function Map({ polygons }: { polygons: Polygon[] }) {
           });
           // @ts-ignore
           window.tb = tb;
-
-          polygons.forEach((polygon) => {
-            addObject(polygon);
-          });
         },
 
         render: function () {
@@ -139,63 +135,4 @@ export default function Map({ polygons }: { polygons: Polygon[] }) {
   });
 
   return <div ref={mapContainer} className="h-screen" />;
-}
-
-function addObject(polygon: Polygon) {
-  const scale = {
-    "/landmann_grill.glb": 0.0025,
-    "/maple_tree.glb": 0.1,
-    "/bike-station1.glb": 1.5,
-    "/sports_rackets_bats_and_balls.glb": 0.1,
-    "/dusty_old_bookshelf_free": 10,
-    "/emrysquick_project1.glb": 10,
-  };
-
-  // @ts-ignore
-  const feature = data.features.find(
-    (x) => x.properties.polygon_id === polygon.Id,
-  );
-
-  const lng = feature.geometry.coordinates[0][0][0];
-  const lat = feature.geometry.coordinates[0][0][1];
-
-  const counts = {
-    PublicToiletLikeCount: polygon.PublicToiletLikeCount,
-    DrinkFountainLikeCount: polygon.DrinkFountainLikeCount,
-    TreesLikeCount: polygon.TreesLikeCount,
-    FlowersLikeCount: polygon.FlowersLikeCount,
-  };
-
-  // find key with highest value
-  const max = Object.keys(counts).reduce((a, b) =>
-    counts[a] > counts[b] ? a : b,
-  );
-
-  // count key to obj mapping
-  const objMap = {
-    PublicToiletLikeCount: "/dusty_old_bookshelf_free.glb",
-    DrinkFountainLikeCount: "/bike-station1.glb",
-    TreesLikeCount: "/maple_tree.glb",
-    FlowersLikeCount: "/landmann_grill.glb",
-  };
-
-  const obj = objMap[max];
-
-  const options = {
-    type: "gltf",
-    obj,
-    scale: scale[obj],
-    units: "meters",
-    adjustment: { x: 0, y: 0.5, z: 0 },
-    anchor: "bottom",
-    rotation: { x: 90, y: 0, z: 0 },
-  };
-
-  // @ts-ignore
-  window.tb.loadObj(options, function (model: any) {
-    const truck = model.setCoords([lng, lat]);
-    truck.addEventListener("ObjectChanged", console.log, false);
-    // @ts-ignore
-    window.tb.add(truck);
-  });
 }
