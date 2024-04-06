@@ -20,6 +20,10 @@ export type Spot = {
 
 const origin: mapboxgl.LngLatLike = [13.435310637279885, 52.51957888613136];
 
+const features = (data as any).features.filter((x) =>
+  x.properties.polygon_id.startsWith("P106_"),
+);
+
 export default function Map() {
   const mapContainer = useRef(null);
   const map = useRef(null);
@@ -65,9 +69,7 @@ export default function Map() {
         generateId: true,
         data: {
           type: "FeatureCollection",
-          features: (data as any).features.filter((x) =>
-            x.properties.polygon_id.startsWith("P106_"),
-          ),
+          features,
         },
       });
 
