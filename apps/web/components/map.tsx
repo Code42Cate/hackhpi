@@ -18,7 +18,7 @@ export type Spot = {
   aqi?: number;
 };
 
-const origin: mapboxgl.LngLatLike = [13.4394958, 52.518519];
+const origin: mapboxgl.LngLatLike = [13.435310637279885, 52.51957888613136];
 
 export default function Map() {
   const mapContainer = useRef(null);
@@ -31,7 +31,7 @@ export default function Map() {
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/standard",
       center: origin,
-      zoom: 18,
+      zoom: 17,
       antialias: true,
       dragRotate: true,
       dragPan: true,
@@ -65,7 +65,9 @@ export default function Map() {
         generateId: true,
         data: {
           type: "FeatureCollection",
-          features: (data as any).features,
+          features: (data as any).features.filter((x) =>
+            x.properties.polygon_id.startsWith("P106_"),
+          ),
         },
       });
 
