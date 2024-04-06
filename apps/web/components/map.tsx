@@ -144,13 +144,13 @@ function addTree(lng: number, lat: number) {
   const scale = {
     "/landmann_grill.glb": 0.0025,
     "/maple_tree.glb": 0.1,
-    "/bicycle_low-poly_minimalistic.glb": 1,
+    "/bike-station1.glb": 1,
     "/sports_rackets_bats_and_balls.glb": 0.1,
     "/dusty_old_bookshelf_free": 10,
     "/emrysquick_project1.glb": 10,
   };
 
-  const obj = "/dusty_old_bookshelf_free.glb";
+  const obj = "/bike-station1.glb";
 
   const options = {
     type: "gltf",
