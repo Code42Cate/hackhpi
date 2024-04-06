@@ -62,20 +62,20 @@ export const cityModules: Record<
     likeCount: 12,
     Icon: Drumstick,
     likeCountKey: "BBQLikeCount",
-    description: "A drinking fountain to quench the thirst.",
+    description: "Organize a BBQ and invite your neighbors.",
   },
   bikes: {
     name: "Bikes",
     likeCount: 2,
     Icon: BikeIcon,
     likeCountKey: "BikesLikeCount",
-    description: "A public toilet for the community.",
+    description: "Rent a bike and explore the city.",
   },
   books: {
     name: "Books",
     likeCount: 2,
     Icon: Book,
     likeCountKey: "BooksLikeCount",
-    description: "A public toilet for the community.",
+    description: "Rent a book and read it in the park.",
   },
 };
