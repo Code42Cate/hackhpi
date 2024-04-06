@@ -29,3 +29,17 @@ export async function getSpotLikes(polygonId: string): Promise<Polygon> {
   });
   return polygon;
 }
+
+export async function likeSpot(
+  polygonId: string,
+  category: keyof Omit<Polygon, "Id">,
+) {
+  await prisma.polygon.update({
+    where: { Id: polygonId },
+    data: {
+      [category]: {
+        increment: 1,
+      },
+    },
+  });
+}

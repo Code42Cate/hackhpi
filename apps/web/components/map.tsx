@@ -1,33 +1,29 @@
 "use client";
 import React, { useRef, useEffect } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { fetchAirQuality, getSpotLikes } from "../lib/actions";
 import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import data from "../minified.json";
 import { Threebox } from "threebox-plugin";
 import { Polygon } from "database";
+import { useRouter } from "next/navigation";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiY29kZTQyY2F0ZSIsImEiOiJjbHU5MG15NzEwNGJpMmpta2gzNWMxazFqIn0.DmdGNtsf_SCeRxqEDlt0UQ";
 
 export type Spot = {
-  lng: number;
-  lat: number;
   id: string;
   streetname: string;
-  likes: Polygon;
-  aqi: number;
+  likes?: Polygon;
+  aqi?: number;
 };
 
 const origin: mapboxgl.LngLatLike = [13.4394958, 52.518519];
-export default function Map({
-  setSelectedSpot,
-}: {
-  setSelectedSpot: (spot: Spot) => void;
-}) {
+
+export default function Map() {
   const mapContainer = useRef(null);
   const map = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -114,14 +110,7 @@ export default function Map({
       map.current.on("click", "areas", async (e) => {
         const feature = e.features[0];
         const id = feature.id;
-        setSelectedSpot({
-          lng: e.lngLat.lng,
-          lat: e.lngLat.lat,
-          streetname: feature.properties.strassenname,
-          id,
-          aqi: await fetchAirQuality(e.lngLat.lat, e.lngLat.lng),
-          likes: await getSpotLikes(feature.properties.polygon_id),
-        });
+        router.push(`/?spot=${feature.properties.polygon_id}`);
 
         if (currentPolygonId) {
           map.current.setFeatureState(
@@ -136,7 +125,7 @@ export default function Map({
         );
         currentPolygonId = id;
 
-        addTree(e.lngLat.lng, e.lngLat.lat);
+        //addTree(e.lngLat.lng, e.lngLat.lat);
       });
     });
   });

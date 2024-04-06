@@ -1,38 +1,51 @@
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
 } from "ui/components/ui/card";
 
-import {
-    Button
-} from "ui/components/ui/button";
-
 import { Heart } from "lucide-react";
+import { likeSpot } from "@/lib/actions";
+import { useRouter } from "next/navigation";
 
-export default function CityModule({ name, Icon, description = null, likeCount, isLiked = false }) {
-    return (
-        <Card className="shadow-md hover:shadow-lg hover:bg-gray-100 cursor-pointer">
-            <CardHeader>
-                <CardTitle className="text-md">
-                    <div className="flex justify-between">
-                        <div className="flex gap-2">
-                            {Icon && <Icon className="h-6 w-6 relative top-[2px]" />}
-                            {name}
-                        </div>
-                        <div className="flex gap-2">
-                            <Heart fill={isLiked ? "red" : "none"} className="h-6 w-6 top-[-5px]" />
-                            {likeCount + ' '}
-                        </div>
-                    </div>
+export default function CityModule({
+  name,
+  likeCountKey,
+  Icon,
+  description = null,
+  polygonId,
+  likeCount,
+  isLiked = false,
+}) {
+  const router = useRouter();
 
-                </CardTitle>
-            </CardHeader>
-            {description && <CardContent>{description}</CardContent>
-            }
-        </Card >
-    );
+  return (
+    <Card
+      className="cursor-pointer shadow-md hover:bg-gray-100 hover:shadow-lg"
+      onClick={async () => {
+        await likeSpot(polygonId, likeCountKey);
+        router.refresh();
+      }}
+    >
+      <CardHeader>
+        <CardTitle className="text-md">
+          <div className="flex justify-between">
+            <div className="flex gap-2">
+              {Icon && <Icon className="relative top-[2px] h-6 w-6" />}
+              {name}
+            </div>
+            <div className="flex gap-2">
+              <Heart
+                fill={isLiked ? "red" : "none"}
+                className="top-[-5px] h-6 w-6"
+              />
+              {likeCount + " "}
+            </div>
+          </div>
+        </CardTitle>
+      </CardHeader>
+      {description && <CardContent>{description}</CardContent>}
+    </Card>
+  );
 }
